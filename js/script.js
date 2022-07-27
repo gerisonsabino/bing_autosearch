@@ -10,7 +10,7 @@ const search = () => {
     let searchQty = parseInt(b_searchbox.value.match(/\d+/g));
 
     if (searchQty !== NaN && searchQty > 0) {
-        if (searchQty > 50) 
+        if (searchQty > 50)
             b_searchbox.value = searchQty = 50;
 
         b_searchbutton.disabled = b_searchbox.disabled = true;
@@ -30,11 +30,15 @@ const search = () => {
 
                 if (i == searchQty) {
                     b_searchbutton.disabled = b_searchbox.disabled = false;
-                    b_searchlabel.style.display = "none";
+                    b_searchlabel.innerText = "";
                     b_searchbox.value = "";
                 }
             }, ((i - 1) * 3000));
         }
+
+    }
+    else {
+        b_searchlabel.innerText = `Informe uma quantidade válida de pesquisas.`;
     }
 }
 

@@ -63,10 +63,10 @@ input[type=number] {
     -moz-appearance: textfield;
 }
 
-main label {
+#b_searchlabel {
     display: inline-block;
     margin-left: 1em;
-    color: red;
+    color: #f00;
 }
 
 #b_searchbox {
