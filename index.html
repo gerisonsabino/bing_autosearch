@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="content-language" content="pt-br" />
+    <meta meta="title" content="Bing | Autosearch for Rewards" />
+    <meta name="description" content="Bing Autosearch for Rewards" />
+    <meta name="robots" content="all" />
+    <meta name="author" content="Gérison Sabino" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta property="og:locale" content="pt_BR" />
+    <meta property="og:url" content="https://gerison.net/bing_autosearch" />
+    <meta property="og:title" content="Bing | Autosearch for Rewards" />
+    <meta property="og:site_name" content="Bing | Autosearch for Rewards" />
+    <meta property="og:description" content="Bing Autosearch for Rewards" />
+    <meta property="og:type" content="website" />
+
+    <link rel="icon" type="image/png" href="img/rewards.png">
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+
+    <title>Bing | Autosearch for Rewards</title>
+</head>
+    <body>
+        <div id="wrapper">
+            <header>
+                <div>
+                    <img src="img/bing.png" alt="Microsoft Bing" /> 
+                </div>
+                <div>
+                    <img src="img/rewards.png" alt="Rewards" width="15px" />
+                    <small>Autosearch for Rewards</small>
+                <div>
+            </header>
+            <main>
+                <div id="b_searchform">
+                    <span>
+                        <input type="number" placeholder="Quantidade de pesquisas (Ex.: 10, 20, 30...)" id="b_searchbox" />
+                    </span>
+                    <span>
+                        <button type="button" id="b_searchbutton" title="Buscar">
+                            <img src="img/search.png" alt="bing" />
+                        </button>
+                    </span>
+                    <br />
+                    <label id="b_searchlabel"></label>
+                </div>
+                <div>
+                    <h3>Tutorial</h3>
+                    <ol id="b_searchtutorial">
+                        <li>Acesse a <a href="https://www.bing.com/rewards/signin" target="_blank">Página do Bing</a> e entre com sua conta vinculada ao rewards.</li>
+                        <li>Feche e retorne a esta página.</li>
+                        <li>Informe, no campo acima, a quantidade de pesquisas desejada e clique na lupa para pesquisar.</li>
+                        <li>Caso não seja possível abrir mais de uma aba automticamente, autorize a abertura de multiplas páginas/pop-ups no navegador e refaça o processo do início.</li>
+                        <li>Se ainda assim não for possível a abertura de múltiplas páginas/pop-ups, clique nos links do histórico de pesquisa abaixo para efetuar as buscas manualmente.</li>
+                    </ol>
+                    <hr />
+                    <h3>Histórico de pesquisa</h3>
+                    <ol id="b_searchlinks"></ol>
+                </div>
+            </main>
+            <footer>
+                <p>
+                    Desenvolvido por <a href="https://www.gerison.net" target="_blank">Gérison Sabino</a>
+                </p>
+            </footer>
+        </div>
+        <script type="text/javascript" src="js/script.js"></script>
+    </body>
+</html>
