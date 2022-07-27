@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="utf-8" />
@@ -29,20 +29,17 @@
                 <div>
                     <img src="img/rewards.png" alt="Rewards" width="15px" />
                     <small>Autosearch for Rewards</small>
-                <div>
+                </div>
             </header>
             <main>
                 <div id="b_searchform">
-                    <span>
-                        <input type="number" placeholder="Quantidade de pesquisas (Ex.: 10, 20, 30...)" id="b_searchbox" />
-                    </span>
-                    <span>
-                        <button type="button" id="b_searchbutton" title="Buscar">
-                            <img src="img/search.png" alt="bing" />
-                        </button>
-                    </span>
-                    <br />
-                    <label id="b_searchlabel"></label>
+                    <input type="number" placeholder="Quantidade de pesquisas (Ex.: 10, 20, 30...)" id="b_searchbox" min="1" max="50" />
+                    <button type="button" id="b_searchbutton" title="Buscar">
+                        <img src="img/search.png" alt="bing" />
+                    </button>
+                </div>
+                <div>
+                    <label id="b_searchlabel">Atenção! Altas quantidades de pesquisas podem afetar o desempenho do seu dispositivo.</label>
                 </div>
                 <div>
                     <h3>Tutorial</h3>

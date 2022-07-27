@@ -52,19 +52,25 @@ input[type=number] {
 }
 
 #b_searchform {
-    margin-bottom: 2em;
+    margin-bottom: 1em;
+    border-radius: 25px;
+    box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 2px 4px 1px rgba(0,0,0,.18);
+    border-left: 1px solid transparent;
+    border-right: none;
+    border-top: 1px solid transparent;
+    border-bottom: 1px solid transparent;
+    -webkit-appearance: none;
+    -moz-appearance: textfield;
 }
 
-#b_searchform label {
-    display: none;
-    margin-top: 2em;
+main label {
+    display: inline-block;
     margin-left: 1em;
     color: red;
 }
 
 #b_searchbox {
-    width: 100%;
-    margin: 5px 0px 1px 1px;
+    width: 90%;
     padding: 0 10px 0 19px;
     border: 0;
     max-height: none;
@@ -73,15 +79,6 @@ input[type=number] {
     height: 44px;
     vertical-align: top;
     background-color: transparent;
-    border-radius: 22px;
-    box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 2px 4px 1px rgba(0,0,0,.18);
-    border-left: 1px solid transparent;
-    border-right: none;
-    border-top: 1px solid transparent;
-    border-bottom: 1px solid transparent;
-    -webkit-appearance: none;
-    margin: 0;
-    -moz-appearance: textfield;
 }
 
 #b_searchbutton {
@@ -89,11 +86,8 @@ input[type=number] {
     border: 0;
     width: 30px;
     height: 30px;
-    display: inline-block;
     cursor: pointer;
-    margin-left: -40px;
-    margin-top: 7px;
-    position: absolute;
+    margin-top: 8px;
 }
 
 #b_searchbutton > img {
