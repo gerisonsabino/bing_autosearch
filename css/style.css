@@ -52,6 +52,8 @@ input[type=number] {
 }
 
 #b_searchform {
+    display: flex;
+    align-items: center;
     margin-bottom: 1em;
     border-radius: 25px;
     box-shadow: 0 0 0 1px rgba(0,0,0,.1),0 2px 4px 1px rgba(0,0,0,.18);
@@ -71,6 +73,7 @@ input[type=number] {
 
 #b_searchbox {
     width: 90%;
+    flex-direction: column;
     padding: 0 10px 0 19px;
     border: 0;
     max-height: none;
@@ -82,12 +85,13 @@ input[type=number] {
 }
 
 #b_searchbutton {
-    background-color: #fff;
+    background-color: transparent;
     border: 0;
-    width: 30px;
-    height: 30px;
+    width: 44px;
+    height: 44px;
     cursor: pointer;
-    margin-top: 8px;
+    flex-direction: row;
+    align-items: center;
 }
 
 #b_searchbutton > img {
