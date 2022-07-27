@@ -5,6 +5,7 @@ const b_searchbox = document.getElementById("b_searchbox");
 const b_searchbutton = document.getElementById("b_searchbutton");
 const b_searchlabel = document.getElementById("b_searchlabel");
 const b_searchlinks = document.getElementById("b_searchlinks");
+const b_searchmessage = document.getElementById("b_searchmessage");
 
 const search = () => {
     let searchQty = parseInt(b_searchbox.value.match(/\d+/g));
@@ -27,6 +28,9 @@ const search = () => {
                 window.open(searchURL);
 
                 b_searchlinks.innerHTML += `<li><a href='${searchURL}' target='_blank'>${searchURL}</a></li>`;
+
+                if (b_searchlinks.innerHTML !== "")
+                    b_searchmessage.innerText = ""; 
 
                 if (i == searchQty) {
                     b_searchbutton.disabled = b_searchbox.disabled = false;

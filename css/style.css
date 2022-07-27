@@ -129,3 +129,7 @@ footer {
     text-align: center;
     padding-top: 3em;
 }
+
+footer p {
+    margin-bottom: 1em;    
+}
