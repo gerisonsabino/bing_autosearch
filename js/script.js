@@ -38,7 +38,7 @@ const search = () => {
 
     }
     else {
-        b_searchlabel.innerText = `Informe uma quantidade válida de pesquisas.`;
+        b_searchlabel.innerText = `Por favor, informe uma quantidade válida de pesquisas.`;
     }
 }
 
@@ -51,3 +51,13 @@ window.onload = () => {
         }
     };
 };
+
+//Google Analytics config
+window.dataLayer = window.dataLayer || [];
+
+function gtag() {
+    dataLayer.push(arguments);
+}
+
+gtag('js', new Date());
+gtag('config', 'G-YXNCPPFVCW');
