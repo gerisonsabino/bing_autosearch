@@ -1,4 +1,4 @@
 # bing_autosearch
-Bing autosearch for Microsoft Rewards
+Auto Searcher for Microsoft Rewards
 
 https://gerisonsabino.com/bing_autosearch
