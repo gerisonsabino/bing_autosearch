@@ -1,5 +1,5 @@
 # Bing Auto Searcher for Microsoft Rewards (bing_autosearch)
 
-Browser-based auto search bot for Microsoft Rewards.
+Browser-based auto Bing search bot to earn Microsoft Rewards points.
 
 https://gerisonsabino.com/bing_autosearch
