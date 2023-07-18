@@ -1,1 +1,124 @@
-﻿<!DOCTYPE html><html lang="en"><head><meta charset="utf-8" /><meta http-equiv="content-language" content="en-us" /><meta meta="title" content="Bing Auto Search for Microsoft Rewards" /><meta name="description" content="Browser-based Bing auto search bot to earn Microsoft Rewards points." /><meta name="robots" content="all" /><meta name="author" content="Gérison Sabino" /><meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" /><meta property="og:locale" content="en_US" /><meta property="og:url" content="https://gerisonsabino.com/bing_autosearch" /><meta property="og:title" content="Bing Auto Search for Microsoft Rewards" /><meta property="og:site_name" content="Bing Auto Search for Microsoft Rewards" /><meta property="og:description" content="Browser-based Bing auto search bot to earn Microsoft Rewards points." /><meta property="og:type" content="website" /><link rel="icon" type="image/png" href="img/favicon.png"><link type="text/css" rel="stylesheet" href="css/style.css" /><link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" /><link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" /><script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script><script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-YXNCPPFVCW" async=""></script><title>Bing Auto Search for Microsoft Rewards</title></head><body><section id="wrapper" class="m-auto text-center"><header><img src="img/rewards.png" alt="Microsoft Rewards" /><h2>Bing Auto Search for Microsoft Rewards</h2></header><main><div><button type="button" id="btn-start" class="btn btn-warning btn-lg"><i class="fas fa-play-circle"></i>&nbsp;<strong>Start Auto Search</strong></button><button type="button" id="btn-stop" class="btn btn-danger btn-lg"><i class="fas fa-stop-circle"></i>&nbsp;<strong>Stop Auto Search&nbsp;<span id="span-progress">(0/35)</span></strong></button></div><div id="div-bing"></div></main><footer><a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-help">Need help? (Tutorial and Settings)</a><p class="pt-3">This page is not affiliated with Microsoft, Rewards, Bing or Edge.</p><small>Microsoft, Rewards, Bing and Edge are registered trademarks of Microsoft Corporation in the United States of America and elsewhere. The use on this page is for illustrative purposes only.</small><hr /><a href="https://bit.ly/3NV75Rx" target="_blank" class="btn btn-outline-warning btn-sm mt-1 mb-3"><strong>Buy me a coffee</strong></a><br /><label>Made with &#9749; by</label>&nbsp;<a href="https://www.gerisonsabino.com/?ref=bing_autosearch" target="_blank">Gérison Sabino</a></footer></section><div class="modal fade" id="modal-help" tabindex="-1" aria-labelledby="modal-help" aria-hidden="true"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><h5 class="modal-title">Need help? (Tutorial and Settings)</h5><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button></div><div class="modal-body"><div><h6><strong>Tutorial</strong></h6><ol class="px-3 small"><li>Use <a href="https://www.microsoft.com/edge/download" target="_blank">Microsoft Edge (<img src="img/edge.png" alt="Microsoft Edge" />)</a> browser to earn extra points.</li><li><a href="https://www.bing.com/" target="_blank">Sign in to Bing</a> with your Microsoft Rewards account and return to this page.</li><li>Start a new auto search by clicking the "Start Auto Search" button.</li><li>The progress counter can be viewed on the "Stop Auto Search" button.</li><li>To perform mobile searches, use your smartphone or emulate a mobile browser through the developer tools (F12) on the PC.</li></ol></div><div><h6><strong>Limit</strong></h6><div class="form-group"><select class="form-select" id="slc-limit"><option value="5">5 searches</option><option value="10">10 searches</option><option value="20">20 searches</option><option value="30">30 searches</option><option value="35" selected="selected">35 searches (default)</option><option value="40">40 searches</option><option value="45">45 searches</option><option value="50">50 searches</option></select></div></div><div class="mt-2"><h6><strong>Interval</strong></h6><div class="form-group"><select class="form-select" id="slc-interval"><option value="5000" selected="selected">5 seconds (default)</option><option value="10000">10 seconds</option><option value="15000">15 seconds</option><option value="30000">30 seconds</option><option value="60000">60 seconds</option><option value="120000">120 seconds</option><option value="180000">180 seconds</option></select></div></div><div class="mt-2"><h6><strong>Multi-tab Mode</strong></h6><p class="mt-2 mb-2 small"><strong class="text-danger">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</strong></p><div class="form-group"><select class="form-select" id="slc-multitab"><option value="true">Enable multi-tab mode</option><option value="false" selected="selected">Disable multi-tab mode (default)</option></select></div><p class="mt-2 mb-2 small">Due to system restrictions, for some devices/browsers it may be necessary to open multiple tabs to search and receive rewards points (enable if this is your case).</p><p class="mb-0 small">When enabling multi-tab mode, it's recommended to use a longer interval (30sec+) between searches, as opening new tabs depends on and may affect your device's performance quality.</p></div></div></div></div></div><script type="text/javascript" src="js/script.js"></script></body></html>
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="content-language" content="en-us" />
+    <meta meta="title" content="Bing Auto Search for Microsoft Rewards" />
+    <meta name="description" content="Browser-based Bing auto search bot to earn Microsoft Rewards points." />
+    <meta name="robots" content="all" />
+    <meta name="author" content="Gérison Sabino" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:url" content="https://gerisonsabino.com/bing_autosearch" />
+    <meta property="og:title" content="Bing Auto Search for Microsoft Rewards" />
+    <meta property="og:site_name" content="Bing Auto Search for Microsoft Rewards" />
+    <meta property="og:description" content="Browser-based Bing auto search bot to earn Microsoft Rewards points." />
+    <meta property="og:type" content="website" />
+    <link rel="icon" type="image/png" href="img/favicon.png">
+    <link type="text/css" rel="stylesheet" href="css/style.css" />
+    <link type="text/css" rel="stylesheet" href="https://use.fontawesome.com/releases/v6.1.1/css/all.css" />
+    <link type="text/css" rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous" />
+    <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+    <script type="text/javascript" src="https://www.googletagmanager.com/gtag/js?id=G-YXNCPPFVCW" async=""></script>
+    <title>Bing Auto Search for Microsoft Rewards</title>
+</head>
+<body>
+    <section id="wrapper" class="m-auto text-center">
+        <header>
+            <img src="img/rewards.png" alt="Microsoft Rewards" />
+            <h2>Bing Auto Search for Microsoft Rewards</h2>
+        </header>
+        <main>
+            <div>
+                <button type="button" id="btn-start" class="btn btn-warning btn-lg">
+                    <i class="fas fa-play-circle"></i>&nbsp;<strong>Start Auto Search</strong>
+                </button>
+                <button type="button" id="btn-stop" class="btn btn-danger btn-lg">
+                    <i class="fas fa-stop-circle"></i>&nbsp;<strong>Stop Auto Search&nbsp;<span id="span-progress">(0/35)</span></strong>
+                </button>
+            </div>
+            <div id="div-bing"></div>
+        </main>
+        <footer>
+            <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-help">Need help? (Tutorial and Settings)</a>
+            <p class="pt-3">This page is not affiliated with Microsoft, Rewards, Bing or Edge.</p>
+            <p>Warning! Using automation tools is against the <a href="https://www.microsoft.com/en-US/servicesagreement/#14l_MicrosoftRewards" target="_blank">Microsoft Rewards Terms of Use</a>. Your account may be suspended and/or banned, use this tool at your own risk.</p>
+            <small>Microsoft, Rewards, Bing and Edge are registered trademarks of Microsoft Corporation in the United States of America and elsewhere. The use on this page is for illustrative purposes only.</small>
+            <hr />
+            <label>Made with &#9749; by</label>&nbsp;<a href="https://www.gerisonsabino.com/?ref=bing_autosearch" target="_blank">Gérison Sabino</a>
+        </footer>
+    </section>
+    <div class="modal fade" id="modal-help" tabindex="-1" aria-labelledby="modal-help" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Need help? (Tutorial and Settings)</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <div>
+                        <h6>
+                            <strong>Tutorial</strong>
+                        </h6>
+                        <ol class="px-3 small">
+                            <li>Use <a href="https://www.microsoft.com/edge/download" target="_blank">Microsoft Edge (<img src="img/edge.png" alt="Microsoft Edge" />)</a> browser to earn extra points.</li>
+                            <li><a href="https://www.bing.com/" target="_blank">Sign in to Bing</a> with your Microsoft Rewards account and return to this page.</li>
+                            <li>Start a new auto search by clicking the "Start Auto Search" button.</li>
+                            <li>The progress counter can be viewed on the "Stop Auto Search" button.</li>
+                            <li>To perform mobile searches, use your smartphone or emulate a mobile browser through the developer tools (F12) on the PC.</li>
+                        </ol>
+                    </div>
+                    <div>
+                        <h6>
+                            <strong>Limit</strong>
+                        </h6>
+                        <div class="form-group">
+                            <select class="form-select" id="slc-limit">
+                                <option value="5">5 searches</option>
+                                <option value="10">10 searches</option>
+                                <option value="20">20 searches</option>
+                                <option value="30">30 searches</option>
+                                <option value="35" selected="selected">35 searches (default)</option>
+                                <option value="40">40 searches</option>
+                                <option value="45">45 searches</option>
+                                <option value="50">50 searches</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <h6>
+                            <strong>Interval</strong>
+                        </h6>
+                        <div class="form-group">
+                            <select class="form-select" id="slc-interval">
+                                <option value="5000" selected="selected">5 seconds (default)</option>
+                                <option value="10000">10 seconds</option>
+                                <option value="15000">15 seconds</option>
+                                <option value="30000">30 seconds</option>
+                                <option value="60000">60 seconds</option>
+                                <option value="120000">120 seconds</option>
+                                <option value="180000">180 seconds</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="mt-2">
+                        <h6>
+                            <strong>Multi-tab Mode</strong>
+                        </h6>
+                        <p class="mt-2 mb-2 small"><strong class="text-danger">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</strong></p>
+                        <div class="form-group">
+                            <select class="form-select" id="slc-multitab">
+                                <option value="true">Enable multi-tab mode</option>
+                                <option value="false" selected="selected">Disable multi-tab mode (default)</option>
+                            </select>
+                        </div>
+                        <p class="mt-2 mb-2 small">Due to system restrictions, for some devices/browsers it may be necessary to open multiple tabs to search and receive rewards points (enable if this is your case).</p>
+                        <p class="mb-0 small">When enabling multi-tab mode, it's recommended to use a longer interval (30sec+) between searches, as opening new tabs depends on and may affect your device's performance quality.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="js/script.js"></script>
+</body>
+</html>
