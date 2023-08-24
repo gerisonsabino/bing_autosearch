@@ -1,1 +1,82 @@
-@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');html,body{height:100%;font-family:Roboto !important}body{display:flex;align-items:center;padding-bottom:40px;background-color:#1662ca !important;color:#fff !important}#wrapper{max-width:650px;padding:15px}#wrapper p{font-weight:700 !important}#wrapper h1,#wrapper h2{font-weight:bolder}#wrapper main{padding:1.5em 0}#btn-stop{display:none}#modal-help{color:#000}#modal-help img[src='img/edge.png']{width:15px}#modal-help ol li{padding:.3em 0}#modal-help .form-check-label{cursor:pointer}#div-bing{display:none !important;width:0 !important;height:0 !important}#wrapper h1,#wrapper h2,footer p,footer label,footer small{opacity:.8}footer a{color:#fdbf07;font-weight:bolder;text-decoration:none}footer a:hover{color:#fdbf07;text-decoration:underline}footer a.btn:hover{text-decoration:none}
+@import url('https://fonts.googleapis.com/css2?family=Roboto&display=swap');
+
+html,
+body {
+    height: 100%;
+    font-family: Roboto !important;
+}
+
+body {
+    display: flex;
+    align-items: center;
+    padding-bottom: 40px;
+    background-color: #1662ca !important;
+    color: #fff !important;
+}
+
+#wrapper {
+    max-width: 650px;
+    padding: 15px;
+}  
+
+#wrapper p {
+    font-weight: bold !important;
+}
+
+#wrapper h1,
+#wrapper h2 {
+    font-weight: bolder;
+}
+
+#wrapper main {
+    padding: 1.5em 0;
+}
+
+#btn-stop {
+    display: none;
+}
+
+#modal-help {
+    color: #000;
+}
+
+#modal-help img[src='img/edge.png'] {
+    width: 15px;
+}
+
+#modal-help ol li {
+    padding: 0.3em 0;
+}
+
+#modal-help .form-check-label {
+    cursor: pointer;
+}
+
+#div-bing {
+    display: none !important;
+    width: 0px !important;
+    height: 0px !important;
+}
+
+#wrapper h1,
+#wrapper h2, 
+footer p.pt-3,
+footer label,
+footer small {
+    opacity: 0.8;
+}
+
+footer a {
+    color: #fdbf07;
+    font-weight: bolder;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #fdbf07;
+    text-decoration: underline;
+}
+
+footer a.btn:hover {
+    text-decoration: none;
+}
