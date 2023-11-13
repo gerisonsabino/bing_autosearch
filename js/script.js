@@ -137,7 +137,7 @@
         start: () => {
             for (let i = 1; i <= BING_AUTOSEARCH.search.limit; i++) {
                 let term = BING_AUTOSEARCH.search.terms.random().toLowerCase();
-                let url = `https://www.bing.com/search?q=${encodeURI(term)}`;
+                let url = `https://www.bing.com/search?q=${encodeURI(term)}&FORM=QBLH&sp=1&lq=0`;
 
                 setTimeout(() => {
                     BING_AUTOSEARCH.elements.span.progress.innerText = `(${i}/${BING_AUTOSEARCH.search.limit})`;
