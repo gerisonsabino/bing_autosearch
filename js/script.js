@@ -54,13 +54,13 @@
             if (!_need_help.value) {
                 modal_help.show();
 
-                BING_AUTOSEARCH.cookies.set("_need_help", "false", 365);
+                BING_AUTOSEARCH.cookies.set("_need_help", BING_AUTOSEARCH.search.multitab.toString(), 365);
             }
 
             if (!_search_interval.value) {
                 modal_help.show();
 
-                BING_AUTOSEARCH.cookies.set("_search_interval", "5000", 365);
+                BING_AUTOSEARCH.cookies.set("_search_interval", BING_AUTOSEARCH.search.interval.toString(), 365);
             }
             else {
                 BING_AUTOSEARCH.elements.select.interval.value = BING_AUTOSEARCH.search.interval = parseInt(_search_interval.value.toString());
@@ -69,7 +69,7 @@
             if (!_search_limit.value) {
                 modal_help.show();
 
-                BING_AUTOSEARCH.cookies.set("_search_limit", "35", 365);
+                BING_AUTOSEARCH.cookies.set("_search_limit", BING_AUTOSEARCH.search.limit.toString(), 365);
             }
             else {
                 BING_AUTOSEARCH.elements.select.limit.value = BING_AUTOSEARCH.search.limit = parseInt(_search_limit.value.toString());
@@ -104,8 +104,8 @@
                 return list[Math.floor(Math.random() * list.length)];
             }
         },
-        limit: 35,
-        interval: 5000,
+        limit: 30,
+        interval: 10000,
         multitab: false,
         window: {
             open: (url) => {
