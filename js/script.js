@@ -100,11 +100,12 @@
             ],
             random: () => {
                 let list = BING_AUTOSEARCH.search.terms.lists[Math.floor(Math.random() * BING_AUTOSEARCH.search.terms.lists.length)];
-
-                return list[Math.floor(Math.random() * list.length)];
+                let term = list[Math.floor(Math.random() * list.length)];
+                
+                return term;
             }
         },
-        limit: 30,
+        limit: 5,
         interval: 10000,
         multitab: false,
         window: {

@@ -24,6 +24,11 @@
 </head>
 <body>
     <section id="wrapper" class="m-auto text-center">
+        <div class="alert alert-danger p-2">
+            <strong>
+                "Points need a break": according to the new Microsoft Rewards rules, points will only be awarded for 3 searches every 15 minutes.
+            </strong>
+        </div>
         <header>
             <img src="img/rewards.png" alt="Microsoft Rewards" />
             <h2>Bing Auto Search for Microsoft Rewards</h2>
@@ -42,9 +47,6 @@
         <footer>
             <a href="javascript:void(0);" data-bs-toggle="modal" data-bs-target="#modal-help">Need help? (Tutorial and Settings)</a>
             <p class="pt-3">This page is not affiliated with Microsoft, Rewards, Bing or Edge.</p>
-            <p>
-                <small>Warning! Using automation tools is against the <a href="https://www.microsoft.com/en-US/servicesagreement/#14l_MicrosoftRewards" target="_blank">Microsoft Rewards terms of use</a>. Your account may be suspended and/or banned, use this tool at your own risk.</small>
-            </p>
             <small>Microsoft, Rewards, Bing and Edge are registered trademarks of Microsoft Corporation in the United States of America and elsewhere. The use on this page is for illustrative purposes only.</small>
             <hr />
             <label>Made with &#9749; by</label>&nbsp;<a href="https://www.gerisonsabino.com/?ref=bing_autosearch" target="_blank">Gérison Sabino</a>
@@ -58,6 +60,9 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
+                    <div class="alert alert-warning p-2" role="alert">
+                        <small>Warning! Using automation tools is against the <a href="https://www.microsoft.com/en-US/servicesagreement/#14l_MicrosoftRewards" target="_blank" class="alert-link">Microsoft Rewards terms of use</a>. Your account may be suspended and/or banned, use this tool at your own risk.</small>
+                    </div>
                     <div>
                         <h6>
                             <strong>Tutorial</strong>
@@ -65,8 +70,7 @@
                         <ol class="px-3 small">
                             <!--<li>Use <a href="https://www.microsoft.com/edge/download" target="_blank">Microsoft Edge (<img src="img/edge.png" alt="Microsoft Edge" />)</a> browser to earn extra points.</li>-->
                             <li><a href="https://www.bing.com/" target="_blank">Sign in to Bing</a> with your Microsoft Rewards account and return to this page.</li>
-                            <li>Start a new auto search by clicking the "Start Auto Search" button.</li>
-                            <li>The progress counter can be viewed on the "Stop Auto Search" button.</li>
+                            <li>Start a new auto search by clicking the "Start Auto Search" button, the progress counter will be showned.</li>
                             <li>To perform mobile searches, use your smartphone or emulate a mobile browser through the developer tools (F12) on the PC.</li>
                         </ol>
                     </div>
@@ -76,10 +80,10 @@
                         </h6>
                         <div class="form-group">
                             <select class="form-select" id="slc-limit">
-                                <option value="5">5 searches</option>
+                                <option value="5" selected="selected">05 searches (default)</option>
                                 <option value="10">10 searches</option>
                                 <option value="20">20 searches</option>
-                                <option value="30" selected="selected">30 searches (default)</option>
+                                <option value="30">30 searches</option>
                                 <option value="35">35 searches</option>
                                 <option value="40">40 searches</option>
                                 <option value="45">45 searches</option>
@@ -107,15 +111,13 @@
                         <h6>
                             <strong>Multi-tab Mode</strong>
                         </h6>
-                        <p class="mt-2 mb-2 small"><strong class="text-danger">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</strong></p>
                         <div class="form-group">
                             <select class="form-select" id="slc-multitab">
                                 <option value="true">Enable multi-tab mode</option>
                                 <option value="false" selected="selected">Disable multi-tab mode (default)</option>
                             </select>
                         </div>
-                        <p class="mt-2 mb-2 small">Due to system restrictions, for some devices/browsers it may be necessary to open multiple tabs to search and receive rewards points (enable if this is your case).</p>
-                        <p class="mb-0 small">When enabling multi-tab mode, it's recommended to use a longer interval (30sec+) between searches, as opening new tabs depends on and may affect your device's performance quality.</p>
+                        <p class="small text-danger mt-2 mb-0">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</p>
                     </div>
                 </div>
             </div>
