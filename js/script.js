@@ -8,6 +8,7 @@
             limit: document.getElementById("slc-limit"),
             interval: document.getElementById("slc-interval"),
             multitab: document.getElementById("slc-multitab"),
+            autoclose: document.getElementById("slc-autoclose"),
         },
         span: {
             progress: document.getElementById("span-progress"),
@@ -48,6 +49,7 @@
 
             let _need_help = BING_AUTOSEARCH.cookies.get("_need_help");
             let _multitab_mode = BING_AUTOSEARCH.cookies.get("_multitab_mode");
+            let _autoclose = BING_AUTOSEARCH.cookies.get("_autoclose");
             let _search_interval = BING_AUTOSEARCH.cookies.get("_search_interval");
             let _search_limit = BING_AUTOSEARCH.cookies.get("_search_limit");
 
@@ -87,12 +89,23 @@
                 BING_AUTOSEARCH.elements.select.multitab.value = _multitab_mode.value;
                 BING_AUTOSEARCH.search.multitab = (_multitab_mode.value === "true");
             }
+
+            if (!_autoclose.value) {
+                modal_help.show();
+
+                BING_AUTOSEARCH.cookies.set("_autoclose", BING_AUTOSEARCH.search.autoclose.toString(), 365);
+            }
+            else {
+                BING_AUTOSEARCH.elements.select.autoclose.value = _autoclose.value;
+                BING_AUTOSEARCH.search.autoclose = (_autoclose.value === "true");
+            }
         }
     },
     search: {
-        limit: 5,
+        limit: 35,
         interval: 10000,
         multitab: false,
+        autoclose: false,
         engine: {
             terms: {
                 lists: [
@@ -111,11 +124,12 @@
             },
             form: {
                 params: [
-                    "QBLH", //Main textbox suggestion click
-                    "QBRE", //Right sidebar suggestion click
-                    "QSRE4", //Left sidebar suggestion click
-                    "LGWQS2", //Footer suggestion click
+                    "QBLH", //Main page textbox suggestion click
+                    "QBRE", //Search page textbox suggestion click
                     "HDRSC1", //Search tabmenu click 
+                    "LGWQS1", "LGWQS2", "LGWQS3", //Left sidebar suggestion click
+                    "R5FD", "R5FD1", "R5FD2", "R5FD3", "R5FD4", "R5FD5", "R5FD6", "R5FD7", //Right sidebar suggestion click
+                    "QSRE1", "QSRE2", "QSRE3", "QSRE4", "QSRE5", "QSRE6", "QSRE7", "QSRE8", //Footer suggestion click
                 ],
                 random: () => {
                     return BING_AUTOSEARCH.search.engine.form.params[Math.floor(Math.random() * BING_AUTOSEARCH.search.engine.form.params.length)]
@@ -148,22 +162,24 @@
 
                     BING_AUTOSEARCH.elements.div.bing.appendChild(iframe);
                 }
-            },
-            generate: (qty) => {
-                let searches = new Array();
+            }
+        },
+        generate: (qty) => {
+            let searches = new Array();
 
-                for (let index = 1; index <= qty; index++) {
-                    let term = BING_AUTOSEARCH.search.engine.terms.random().toLowerCase();
-                    let url = `https://www.bing.com/search?q=${encodeURI(term)}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
+            for (let i = 0; i < qty; i++) {
+                let index = (i + 1);
+                let term = BING_AUTOSEARCH.search.engine.terms.random();
+                let url = `https://www.bing.com/search?q=${encodeURI(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
+                let interval = (i * (BING_AUTOSEARCH.search.interval - 500));
 
-                    searches.push({ index, term, url });
-                }
+                searches.push({ term, url, index, interval });
+            }
 
-                return searches;
-            },
+            return searches;
         },
         start: () => {
-            let searches = BING_AUTOSEARCH.search.engine.generate(BING_AUTOSEARCH.search.limit);
+            let searches = BING_AUTOSEARCH.search.generate(BING_AUTOSEARCH.search.limit);
 
             searches.forEach((search) => {
                 setTimeout(() => {
@@ -171,7 +187,7 @@
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
-                            BING_AUTOSEARCH.search.stop();
+                            BING_AUTOSEARCH.search.shutdown();
                         }, BING_AUTOSEARCH.search.interval);
                     }
 
@@ -179,13 +195,19 @@
                         BING_AUTOSEARCH.search.engine.iframe.add(search);
                     else
                         BING_AUTOSEARCH.search.engine.window.open(search);
-                }, ((search.index - 1) * (BING_AUTOSEARCH.search.interval - 500)));
+                }, search.interval);
             });
         },
         stop: () => {
             window.open("https://rewards.bing.com/pointsbreakdown");
 
             location.reload();
+        },
+        shutdown: () => {
+            BING_AUTOSEARCH.search.stop();
+
+            if (BING_AUTOSEARCH.search.autoclose)
+                window.close();
         }
     },
     load: () => {
@@ -214,6 +236,11 @@
 
         BING_AUTOSEARCH.elements.select.interval.addEventListener("change", () => {
             BING_AUTOSEARCH.cookies.set("_search_interval", BING_AUTOSEARCH.elements.select.interval.value, 365);
+            location.reload();
+        });
+
+        BING_AUTOSEARCH.elements.select.autoclose.addEventListener("change", () => {
+            BING_AUTOSEARCH.cookies.set("_autoclose", BING_AUTOSEARCH.elements.select.autoclose.value, 365);
             location.reload();
         });
     }

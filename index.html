@@ -80,11 +80,11 @@
                         </h6>
                         <div class="form-group">
                             <select class="form-select" id="slc-limit">
-                                <option value="5" selected="selected">05 searches (default)</option>
+                                <option value="5">05 searches</option>
                                 <option value="10">10 searches</option>
                                 <option value="20">20 searches</option>
                                 <option value="30">30 searches</option>
-                                <option value="35">35 searches</option>
+                                <option value="35" selected="selected">35 searches (default)</option>
                                 <option value="40">40 searches</option>
                                 <option value="45">45 searches</option>
                                 <option value="50">50 searches</option>
@@ -97,13 +97,15 @@
                         </h6>
                         <div class="form-group">
                             <select class="form-select" id="slc-interval">
-                                <option value="5000">5 seconds</option>
+                                <option value="5000">05 seconds</option>
                                 <option value="10000" selected="selected">10 seconds (default)</option>
                                 <option value="15000">15 seconds</option>
                                 <option value="30000">30 seconds</option>
                                 <option value="60000">60 seconds</option>
-                                <option value="120000">120 seconds</option>
-                                <option value="180000">180 seconds</option>
+                                <option value="120000">02 minutes</option>
+                                <option value="180000">03 minutes</option>
+                                <option value="240000">04 minutes</option>
+                                <option value="300000">05 minutes</option>
                             </select>
                         </div>
                     </div>
@@ -118,6 +120,17 @@
                             </select>
                         </div>
                         <p class="small text-danger mt-2 mb-0">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</p>
+                    </div>
+                    <div class="mt-2">
+                        <h6>
+                            <strong>Auto Close when finished</strong>
+                        </h6>
+                        <div class="form-group">
+                            <select class="form-select" id="slc-autoclose">
+                                <option value="true">Enable</option>
+                                <option value="false" selected="selected">Disable (default)</option>
+                            </select>
+                        </div>
                     </div>
                 </div>
             </div>
