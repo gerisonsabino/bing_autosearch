@@ -8,7 +8,6 @@
             limit: document.getElementById("slc-limit"),
             interval: document.getElementById("slc-interval"),
             multitab: document.getElementById("slc-multitab"),
-            autoclose: document.getElementById("slc-autoclose"),
         },
         span: {
             progress: document.getElementById("span-progress"),
@@ -49,7 +48,6 @@
 
             let _need_help = BING_AUTOSEARCH.cookies.get("_need_help");
             let _multitab_mode = BING_AUTOSEARCH.cookies.get("_multitab_mode");
-            let _autoclose = BING_AUTOSEARCH.cookies.get("_autoclose");
             let _search_interval = BING_AUTOSEARCH.cookies.get("_search_interval");
             let _search_limit = BING_AUTOSEARCH.cookies.get("_search_limit");
 
@@ -89,23 +87,12 @@
                 BING_AUTOSEARCH.elements.select.multitab.value = _multitab_mode.value;
                 BING_AUTOSEARCH.search.multitab = (_multitab_mode.value === "true");
             }
-
-            if (!_autoclose.value) {
-                modal_help.show();
-
-                BING_AUTOSEARCH.cookies.set("_autoclose", BING_AUTOSEARCH.search.autoclose.toString(), 365);
-            }
-            else {
-                BING_AUTOSEARCH.elements.select.autoclose.value = _autoclose.value;
-                BING_AUTOSEARCH.search.autoclose = (_autoclose.value === "true");
-            }
         }
     },
     search: {
         limit: 35,
         interval: 10000,
         multitab: false,
-        autoclose: false,
         engine: {
             terms: {
                 lists: [
@@ -187,8 +174,8 @@
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
-                            BING_AUTOSEARCH.search.shutdown();
-                        }, BING_AUTOSEARCH.search.interval + 500);
+                            BING_AUTOSEARCH.search.stop();
+                        }, BING_AUTOSEARCH.search.interval);
                     }
 
                     if (!BING_AUTOSEARCH.search.multitab)
@@ -202,12 +189,6 @@
             window.open("https://rewards.bing.com/pointsbreakdown");
 
             location.reload();
-        },
-        shutdown: () => {
-            if (BING_AUTOSEARCH.search.autoclose) 
-                window.close();
-            else 
-                BING_AUTOSEARCH.search.stop();
         }
     },
     load: () => {
@@ -236,11 +217,6 @@
 
         BING_AUTOSEARCH.elements.select.interval.addEventListener("change", () => {
             BING_AUTOSEARCH.cookies.set("_search_interval", BING_AUTOSEARCH.elements.select.interval.value, 365);
-            location.reload();
-        });
-
-        BING_AUTOSEARCH.elements.select.autoclose.addEventListener("change", () => {
-            BING_AUTOSEARCH.cookies.set("_autoclose", BING_AUTOSEARCH.elements.select.autoclose.value, 365);
             location.reload();
         });
     }
