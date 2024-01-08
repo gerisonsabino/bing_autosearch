@@ -204,10 +204,13 @@
             location.reload();
         },
         shutdown: () => {
-            BING_AUTOSEARCH.search.stop();
-
-            if (BING_AUTOSEARCH.search.autoclose)
+            if (BING_AUTOSEARCH.search.autoclose) {
+                window.open("https://rewards.bing.com/pointsbreakdown");
                 window.close();
+            }
+            else {
+                BING_AUTOSEARCH.search.stop();
+            }
         }
     },
     load: () => {
