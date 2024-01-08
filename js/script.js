@@ -188,7 +188,7 @@
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
                             BING_AUTOSEARCH.search.shutdown();
-                        }, BING_AUTOSEARCH.search.interval);
+                        }, BING_AUTOSEARCH.search.interval + 500);
                     }
 
                     if (!BING_AUTOSEARCH.search.multitab)
@@ -205,7 +205,7 @@
         },
         shutdown: () => {
             if (BING_AUTOSEARCH.search.autoclose) 
-                location.href = "https://rewards.bing.com/pointsbreakdown";
+                window.close();
             else 
                 BING_AUTOSEARCH.search.stop();
         }
