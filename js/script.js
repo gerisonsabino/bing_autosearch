@@ -153,12 +153,10 @@
                 }
             },
             timer: {
-                load: () => {
-                    BING_AUTOSEARCH.elements.div.timer.dataset.completion = (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
-                },
-                start: () => {
+                completion: 0,
+                refresh: () => {
                     let searchIndex = parseInt(BING_AUTOSEARCH.elements.button.stop.dataset.index);
-                    let durationCompletion = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.completion);
+                    let durationCompletion = BING_AUTOSEARCH.search.engine.timer.completion;
                     let durationSearch = parseInt(durationCompletion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
                     let minutesSearch = Math.floor((durationSearch / (1000 * 60)) % 60);
                     let secondsSearch = Math.floor((durationSearch / 1000) % 60);
@@ -166,10 +164,15 @@
                     let minutesCompletion = Math.floor((durationCompletion / (1000 * 60)) % 60);
                     let secondsCompletion = Math.floor((durationCompletion / 1000) % 60);
 
-                    BING_AUTOSEARCH.elements.div.timer.dataset.completion -= 1000;
+                    BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
 
-                    if (durationCompletion >= 0) 
-                        BING_AUTOSEARCH.elements.div.timer.innerText = `Next Auto Search in ${(minutesSearch < 10) ? "0" + minutesSearch : minutesSearch}:${(secondsSearch < 10) ? "0" + secondsSearch : secondsSearch} and ${(hoursCompletion < 10) ? "0" + hoursCompletion : hoursCompletion}:${(minutesCompletion < 10) ? "0" + minutesCompletion : minutesCompletion}:${(secondsCompletion < 10) ? "0" + secondsCompletion : secondsCompletion} to complete.`;
+                    if (durationCompletion >= 0)
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> Next Auto Search in ${(minutesSearch < 10) ? "0" + minutesSearch : minutesSearch}:${(secondsSearch < 10) ? "0" + secondsSearch : secondsSearch} and ${(hoursCompletion < 10) ? "0" + hoursCompletion : hoursCompletion}:${(minutesCompletion < 10) ? "0" + minutesCompletion : minutesCompletion}:${(secondsCompletion < 10) ? "0" + secondsCompletion : secondsCompletion} to complete.`;
+                },
+                start: () => {
+                    setInterval(() => {
+                        BING_AUTOSEARCH.search.engine.timer.refresh();
+                    }, 1005);
                 },
             },
         },
@@ -190,16 +193,14 @@
         start: () => {
             let searches = BING_AUTOSEARCH.search.generate(BING_AUTOSEARCH.search.limit);
 
-            setInterval(() => {
-                BING_AUTOSEARCH.search.engine.timer.start();
-            }, 1005);
+            BING_AUTOSEARCH.search.engine.timer.start();
 
             searches.forEach((search) => {
                 setTimeout(() => {
                     BING_AUTOSEARCH.elements.span.progress.innerText = `(${search.index}/${BING_AUTOSEARCH.search.limit})`;
                     BING_AUTOSEARCH.elements.button.stop.dataset.index = search.index;
 
-                    document.title = `${BING_AUTOSEARCH.elements.span.progress.innerText} - Auto search in progress...`;
+                    document.title = `${BING_AUTOSEARCH.elements.span.progress.innerText} - Auto Search Running`;
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
@@ -215,6 +216,8 @@
             });
         },
         stop: () => {
+            document.title = `Auto Search Complete`;
+
             window.open("https://rewards.bing.com/pointsbreakdown");
 
             location.reload();
@@ -222,9 +225,9 @@
     },
     load: () => {
         BING_AUTOSEARCH.cookies.load();
-        BING_AUTOSEARCH.search.engine.timer.load();
+        BING_AUTOSEARCH.search.engine.timer.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
 
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `Settings: ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and multi-tab Mode ${BING_AUTOSEARCH.search.multitab ? "enabled" : "disabled"}.`;
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and multi-tab Mode ${BING_AUTOSEARCH.search.multitab ? "enabled" : "disabled"}.`;
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";
