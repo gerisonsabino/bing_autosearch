@@ -36,6 +36,12 @@ body {
     display: none;
 }
 
+#div-settings,
+#div-timer {
+    margin-top: 0.5em;
+    font-size: 0.7em;
+}
+
 #modal-help {
     color: #000;
 }

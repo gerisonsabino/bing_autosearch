@@ -25,7 +25,7 @@
 <body>
     <section id="wrapper" class="m-auto text-center">
         <div class="alert alert-danger p-2">
-            <strong class="text-danger">
+            <strong class="text-danger small">
                 "Points need a break": Under the new Microsoft Rewards rules, for some restricted accounts, points will only be awarded for 3 searches every 15 minutes.
             </strong>
         </div>
@@ -36,10 +36,12 @@
         <main>
             <div>
                 <button type="button" id="btn-start" class="btn btn-warning btn-lg">
-                    <i class="fas fa-play-circle"></i>&nbsp;<strong>Start Auto Search</strong>
+                    <i class="fas fa-play-circle"></i>&nbsp;<strong>Click to Start Auto Search</strong>
+                    <div id="div-settings">Loading settings...</div>
                 </button>
                 <button type="button" id="btn-stop" class="btn btn-danger btn-lg">
-                    <i class="fas fa-stop-circle"></i>&nbsp;<strong>Stop Auto Search&nbsp;<span id="span-progress">(0/35)</span></strong>
+                    <i class="fas fa-stop-circle"></i>&nbsp;<strong>Click to Stop Auto Search&nbsp;<span id="span-progress">(0/35)</span></strong>
+                    <div id="div-timer">Loading timer...</div>
                 </button>
             </div>
             <div id="div-bing"></div>
