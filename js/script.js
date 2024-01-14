@@ -224,7 +224,7 @@
         BING_AUTOSEARCH.cookies.load();
         BING_AUTOSEARCH.search.engine.timer.load();
 
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and multi-tab Mode ${BING_AUTOSEARCH.search.multitab ? "enabled" : "disabled"}.`;
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `Settings: ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and multi-tab Mode ${BING_AUTOSEARCH.search.multitab ? "enabled" : "disabled"}.`;
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";

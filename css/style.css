@@ -32,13 +32,17 @@ body {
     padding: 1.5em 0;
 }
 
+#btn-start hr,
+#btn-stop hr {
+    margin: 0.5em;
+}
+
 #btn-stop {
     display: none;
 }
 
 #div-settings,
 #div-timer {
-    margin-top: 0.5em;
     font-size: 0.7em;
 }
 
