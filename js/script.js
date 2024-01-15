@@ -155,24 +155,26 @@
             timer: {
                 completion: 0,
                 refresh: () => {
-                    let searchIndex = parseInt(BING_AUTOSEARCH.elements.button.stop.dataset.index);
-                    let durationCompletion = BING_AUTOSEARCH.search.engine.timer.completion;
-                    let durationSearch = parseInt(durationCompletion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
-                    let minutesSearch = Math.floor((durationSearch / (1000 * 60)) % 60);
-                    let secondsSearch = Math.floor((durationSearch / 1000) % 60);
-                    let hoursCompletion = Math.floor((durationCompletion / (1000 * 60 * 60)) % 24);
-                    let minutesCompletion = Math.floor((durationCompletion / (1000 * 60)) % 60);
-                    let secondsCompletion = Math.floor((durationCompletion / 1000) % 60);
+                    setTimeout(() => {
+                        let searchIndex = parseInt(BING_AUTOSEARCH.elements.button.stop.dataset.index);
+                        let durationCompletion = BING_AUTOSEARCH.search.engine.timer.completion;
+                        let durationSearch = parseInt(durationCompletion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
+                        let minutesSearch = Math.floor((durationSearch / (1000 * 60)) % 60);
+                        let secondsSearch = Math.floor((durationSearch / 1000) % 60);
+                        let hoursCompletion = Math.floor((durationCompletion / (1000 * 60 * 60)) % 24);
+                        let minutesCompletion = Math.floor((durationCompletion / (1000 * 60)) % 60);
+                        let secondsCompletion = Math.floor((durationCompletion / 1000) % 60);
 
-                    BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
+                        BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
 
-                    if (durationCompletion >= 0)
-                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> Next Auto Search in ${(minutesSearch < 10) ? "0" + minutesSearch : minutesSearch}:${(secondsSearch < 10) ? "0" + secondsSearch : secondsSearch} and ${(hoursCompletion < 10) ? "0" + hoursCompletion : hoursCompletion}:${(minutesCompletion < 10) ? "0" + minutesCompletion : minutesCompletion}:${(secondsCompletion < 10) ? "0" + secondsCompletion : secondsCompletion} to complete.`;
+                        if (durationCompletion >= 0) {
+                            BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New Auto Search in ${(minutesSearch < 10) ? "0" + minutesSearch : minutesSearch}:${(secondsSearch < 10) ? "0" + secondsSearch : secondsSearch}` : "No New Auto Search" } and ${(hoursCompletion < 10) ? "0" + hoursCompletion : hoursCompletion}:${(minutesCompletion < 10) ? "0" + minutesCompletion : minutesCompletion}:${(secondsCompletion < 10) ? "0" + secondsCompletion : secondsCompletion} to complete.`;
+                            BING_AUTOSEARCH.search.engine.timer.refresh();
+                        }
+                    }, 1000);
                 },
                 start: () => {
-                    setInterval(() => {
-                        BING_AUTOSEARCH.search.engine.timer.refresh();
-                    }, 1005);
+                    BING_AUTOSEARCH.search.engine.timer.refresh();
                 },
             },
         },
