@@ -153,30 +153,28 @@
                 }
             },
             timer: {
-                completion: 0,
+                interval: null,
                 toClockFormat: (milliseconds) => {
                     let hrs = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
                     let min = Math.floor((milliseconds / (1000 * 60)) % 60);
                     let sec = Math.floor((milliseconds / 1000) % 60);
 
-                    return `${hrs < 10 ? "0" + hrs : hrs}:${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
+                    return `${(hrs > 0 ? (hrs < 10 ? "0" + hrs : hrs ) + ":" : "")}${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
                 },
-                refresh: () => {
-                    let completion = BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
-                    let searchIndex = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.index);
-                    let duration = parseInt(completion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
-
-                    if (completion >= 0) {
-                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(duration)}` : "Ending auto searches"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(completion)}.`;
-
-                        setTimeout(() => {
-                            BING_AUTOSEARCH.search.engine.timer.refresh();
-                        }, 1000);
+                run: () => {
+                    if (BING_AUTOSEARCH.search.engine.timer.interval !== null) {
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> Calculating the estimated time to complete...`;
+                        clearInterval(BING_AUTOSEARCH.search.engine.timer.interval);
                     }
-                },
-                start: () => {
-                    BING_AUTOSEARCH.search.engine.timer.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
-                    BING_AUTOSEARCH.search.engine.timer.refresh();
+
+                    BING_AUTOSEARCH.search.engine.timer.interval = setInterval(() => {
+                        let searchIndex = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.index);
+                        let completion = BING_AUTOSEARCH.elements.div.timer.dataset.completion = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.completion) - 1000;
+                        let duration = parseInt(completion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + (BING_AUTOSEARCH.search.interval * searchIndex);
+
+                        if (completion >= 0)
+                            BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(duration)}` : "Ending auto searches"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(completion)}${BING_AUTOSEARCH.search.multitab ? " (may not work correctly in multitab-mode due to browser conditions)" : ""}.`;
+                    }, 1000);
                 },
             },
         },
@@ -205,8 +203,17 @@
                     BING_AUTOSEARCH.elements.span.progress.innerText = progress;
                     BING_AUTOSEARCH.elements.div.timer.dataset.index = search.index;
 
-                    if (search.delay === 0)
-                        BING_AUTOSEARCH.search.engine.timer.start();
+                    if (search.delay === 0) {
+                        BING_AUTOSEARCH.search.engine.timer.run();
+
+                        window.addEventListener("focus", () => {
+                            BING_AUTOSEARCH.search.engine.timer.run();
+                        });
+
+                        window.addEventListener("blur", () => {
+                            BING_AUTOSEARCH.search.engine.timer.run();
+                        });
+                    }
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
@@ -233,6 +240,7 @@
         BING_AUTOSEARCH.cookies.load();
 
         BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}.`;
+        BING_AUTOSEARCH.elements.div.timer.dataset.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";
