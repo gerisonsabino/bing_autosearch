@@ -153,7 +153,12 @@
                 }
             },
             getSettingsString: () => {
-                return `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}`;
+                try {
+                    return `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}`;
+                }
+                catch (e) {
+                    return `Oops! There was an error loading the settings, please clear your browser cookies and reload the page to continue`; 
+                }
             }
         },
         generate: (qty) => {
@@ -173,13 +178,11 @@
         start: () => {
             let searches = BING_AUTOSEARCH.search.generate(BING_AUTOSEARCH.search.limit);
 
-            BING_AUTOSEARCH.elements.div.running.innerHTML = `<strong>Running:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
-
             searches.forEach((search) => {
                 setTimeout(() => {
                     let progress = `(${search.index < 10 ? "0" + search.index : search.index}/${BING_AUTOSEARCH.search.limit < 10 ? "0" + BING_AUTOSEARCH.search.limit : BING_AUTOSEARCH.search.limit})`;
 
-                    document.title = `${progress} - Auto Search Running`;
+                    document.title = `${progress} - Bing Auto Search Running`;
                     BING_AUTOSEARCH.elements.span.progress.innerText = progress;
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
@@ -194,6 +197,8 @@
                         BING_AUTOSEARCH.search.engine.window.open(search);
                 }, search.delay);
             });
+
+            BING_AUTOSEARCH.elements.div.running.innerHTML = `<strong>Auto Search Running:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
         },
         stop: () => {
             window.open("https://rewards.bing.com/pointsbreakdown");
@@ -203,8 +208,6 @@
     },
     load: () => {
         BING_AUTOSEARCH.cookies.load();
-
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";
@@ -231,6 +234,8 @@
             BING_AUTOSEARCH.cookies.set("_search_interval", BING_AUTOSEARCH.elements.select.interval.value, 365);
             location.reload();
         });
+
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Auto Search Settings:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
     }
 };
 
