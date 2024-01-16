@@ -14,7 +14,7 @@
         },
         div: {
             settings: document.getElementById("div-settings"),
-            timer: document.getElementById("div-timer"),
+            running: document.getElementById("div-running"),
             bing: document.getElementById("div-bing")
         }
     },
@@ -152,31 +152,9 @@
                     BING_AUTOSEARCH.elements.div.bing.appendChild(iframe);
                 }
             },
-            timer: {
-                interval: null,
-                toClockFormat: (milliseconds) => {
-                    let hrs = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
-                    let min = Math.floor((milliseconds / (1000 * 60)) % 60);
-                    let sec = Math.floor((milliseconds / 1000) % 60);
-
-                    return `${(hrs > 0 ? (hrs < 10 ? "0" + hrs : hrs ) + ":" : "")}${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
-                },
-                run: () => {
-                    if (BING_AUTOSEARCH.search.engine.timer.interval !== null) {
-                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> Calculating the estimated time to complete...`;
-                        clearInterval(BING_AUTOSEARCH.search.engine.timer.interval);
-                    }
-
-                    BING_AUTOSEARCH.search.engine.timer.interval = setInterval(() => {
-                        let searchIndex = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.index);
-                        let completion = BING_AUTOSEARCH.elements.div.timer.dataset.completion = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.completion) - 1000;
-                        let duration = parseInt(completion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + (BING_AUTOSEARCH.search.interval * searchIndex);
-
-                        if (completion >= 0)
-                            BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(duration)}` : "Ending auto searches"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(completion)}${BING_AUTOSEARCH.search.multitab ? " (may not work correctly in multitab-mode due to browser conditions)" : ""}.`;
-                    }, 1000);
-                },
-            },
+            getSettingsString: () => {
+                return `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}`;
+            }
         },
         generate: (qty) => {
             let searches = new Array();
@@ -195,25 +173,14 @@
         start: () => {
             let searches = BING_AUTOSEARCH.search.generate(BING_AUTOSEARCH.search.limit);
 
+            BING_AUTOSEARCH.elements.div.running.innerHTML = `<strong>Running:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
+
             searches.forEach((search) => {
                 setTimeout(() => {
                     let progress = `(${search.index < 10 ? "0" + search.index : search.index}/${BING_AUTOSEARCH.search.limit < 10 ? "0" + BING_AUTOSEARCH.search.limit : BING_AUTOSEARCH.search.limit})`;
 
                     document.title = `${progress} - Auto Search Running`;
                     BING_AUTOSEARCH.elements.span.progress.innerText = progress;
-                    BING_AUTOSEARCH.elements.div.timer.dataset.index = search.index;
-
-                    if (search.delay === 0) {
-                        BING_AUTOSEARCH.search.engine.timer.run();
-
-                        window.addEventListener("focus", () => {
-                            BING_AUTOSEARCH.search.engine.timer.run();
-                        });
-
-                        window.addEventListener("blur", () => {
-                            BING_AUTOSEARCH.search.engine.timer.run();
-                        });
-                    }
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
@@ -229,8 +196,6 @@
             });
         },
         stop: () => {
-            document.title = `Auto Search Complete`;
-
             window.open("https://rewards.bing.com/pointsbreakdown");
 
             location.reload();
@@ -239,8 +204,7 @@
     load: () => {
         BING_AUTOSEARCH.cookies.load();
 
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}.`;
-        BING_AUTOSEARCH.elements.div.timer.dataset.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";
