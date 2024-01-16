@@ -24,7 +24,7 @@
 </head>
 <body>
     <section id="wrapper" class="m-auto text-center">
-        <div class="alert alert-danger p-2">
+        <div class="alert alert-danger p-3">
             <strong class="text-danger small">
                 "Points need a break": Under the new Microsoft Rewards rules, for some restricted accounts, points will only be awarded for 3 searches every 15 minutes.
             </strong>
@@ -35,12 +35,12 @@
         </header>
         <main>
             <div>
-                <button type="button" id="btn-start" class="btn btn-warning btn-lg">
+                <button type="button" id="btn-start" class="btn btn-warning btn-lg btn-block">
                     <i class="fas fa-play-circle"></i>&nbsp;<strong>Click to Start Auto Search</strong>
                     <hr />
                     <div id="div-settings">Loading Auto Search Settings...</div>
                 </button>
-                <button type="button" id="btn-stop" class="btn btn-danger btn-lg">
+                <button type="button" id="btn-stop" class="btn btn-danger btn-lg btn-block">
                     <i class="fas fa-stop-circle"></i>&nbsp;<strong>Click to Stop Auto Search&nbsp;<span id="span-progress">(0/35)</span></strong>
                     <hr />
                     <div id="div-timer">Loading Auto Search Timer...</div>
@@ -119,8 +119,8 @@
                         </h6>
                         <div class="form-group">
                             <select class="form-select" id="slc-multitab">
-                                <option value="true">Enable multi-tab mode</option>
-                                <option value="false" selected="selected">Disable multi-tab mode (default)</option>
+                                <option value="true">Enabled</option>
+                                <option value="false" selected="selected">Disabled (default)</option>
                             </select>
                         </div>
                         <p class="small text-danger mt-2 mb-0">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</p>

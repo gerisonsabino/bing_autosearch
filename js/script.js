@@ -154,22 +154,29 @@
             },
             timer: {
                 completion: 0,
+                toClockFormat: (milliseconds) => {
+                    let hrs = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
+                    let min = Math.floor((milliseconds / (1000 * 60)) % 60);
+                    let sec = Math.floor((milliseconds / 1000) % 60);
+
+                    return `${hrs < 10 ? "0" + hrs : hrs}:${min < 10 ? "0" + min : min}:${sec < 10 ? "0" + sec : sec}`
+                },
+                refresh: () => {
+                    let completion = BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
+                    let searchIndex = parseInt(BING_AUTOSEARCH.elements.div.timer.dataset.index);
+                    let duration = parseInt(completion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
+
+                    if (completion >= 0) {
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(duration)}` : "Ending auto searches"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(completion)}.`;
+
+                        setTimeout(() => {
+                            BING_AUTOSEARCH.search.engine.timer.refresh();
+                        }, 1000);
+                    }
+                },
                 start: () => {
-                    setInterval(() => {
-                        BING_AUTOSEARCH.search.engine.timer.completion -= 1000;
-
-                        let durationCompletion = BING_AUTOSEARCH.search.engine.timer.completion;
-                        let searchIndex = parseInt(BING_AUTOSEARCH.elements.button.stop.dataset.index);
-                        let durationSearch = parseInt(durationCompletion - (BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit)) + BING_AUTOSEARCH.search.interval * searchIndex;
-                        let minutesSearch = Math.floor((durationSearch / (1000 * 60)) % 60);
-                        let secondsSearch = Math.floor((durationSearch / 1000) % 60);
-                        let hoursCompletion = Math.floor((durationCompletion / (1000 * 60 * 60)) % 24);
-                        let minutesCompletion = Math.floor((durationCompletion / (1000 * 60)) % 60);
-                        let secondsCompletion = Math.floor((durationCompletion / 1000) % 60);
-
-                        if (durationCompletion >= 0)
-                            BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Running:</strong> ${searchIndex < BING_AUTOSEARCH.search.limit ? `New Auto Search in ${(minutesSearch < 10) ? "0" + minutesSearch : minutesSearch}:${(secondsSearch < 10) ? "0" + secondsSearch : secondsSearch}` : "No New Auto Search"} and ${(hoursCompletion < 10) ? "0" + hoursCompletion : hoursCompletion}:${(minutesCompletion < 10) ? "0" + minutesCompletion : minutesCompletion}:${(secondsCompletion < 10) ? "0" + secondsCompletion : secondsCompletion} to complete.`;
-                    }, 1000);
+                    BING_AUTOSEARCH.search.engine.timer.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
+                    BING_AUTOSEARCH.search.engine.timer.refresh();
                 },
             },
         },
@@ -180,7 +187,7 @@
                 let index = (i + 1);
                 let term = BING_AUTOSEARCH.search.engine.terms.random();
                 let url = `https://www.bing.com/search?q=${encodeURI(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
-                let delay = (i * BING_AUTOSEARCH.search.interval);
+                let delay = BING_AUTOSEARCH.search.interval * i;
 
                 searches.push({ term, url, index, delay });
             }
@@ -190,14 +197,16 @@
         start: () => {
             let searches = BING_AUTOSEARCH.search.generate(BING_AUTOSEARCH.search.limit);
 
-            BING_AUTOSEARCH.search.engine.timer.start();
-
             searches.forEach((search) => {
                 setTimeout(() => {
-                    BING_AUTOSEARCH.elements.span.progress.innerText = `(${search.index}/${BING_AUTOSEARCH.search.limit})`;
-                    BING_AUTOSEARCH.elements.button.stop.dataset.index = search.index;
+                    let progress = `(${search.index < 10 ? "0" + search.index : search.index}/${BING_AUTOSEARCH.search.limit < 10 ? "0" + BING_AUTOSEARCH.search.limit : BING_AUTOSEARCH.search.limit})`;
 
-                    document.title = `${BING_AUTOSEARCH.elements.span.progress.innerText} - Auto Search Running`;
+                    document.title = `${progress} - Auto Search Running`;
+                    BING_AUTOSEARCH.elements.span.progress.innerText = progress;
+                    BING_AUTOSEARCH.elements.div.timer.dataset.index = search.index;
+
+                    if (search.delay === 0)
+                        BING_AUTOSEARCH.search.engine.timer.start();
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
@@ -222,9 +231,8 @@
     },
     load: () => {
         BING_AUTOSEARCH.cookies.load();
-        BING_AUTOSEARCH.search.engine.timer.completion = parseInt(BING_AUTOSEARCH.search.interval * BING_AUTOSEARCH.search.limit);
 
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and multi-tab Mode ${BING_AUTOSEARCH.search.multitab ? "enabled" : "disabled"}.`;
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Settings:</strong> ${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}.`;
 
         BING_AUTOSEARCH.elements.button.start.addEventListener("click", () => {
             BING_AUTOSEARCH.elements.button.start.style.display = "none";
