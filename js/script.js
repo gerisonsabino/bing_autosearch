@@ -167,7 +167,7 @@
             for (let i = 0; i < qty; i++) {
                 let index = (i + 1);
                 let term = BING_AUTOSEARCH.search.engine.terms.random();
-                let url = `https://www.bing.com/search?q=${encodeURI(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
+                let url = `https://www.bing.com/search?q=${encodeURIComponent(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
                 let delay = BING_AUTOSEARCH.search.interval * i;
 
                 searches.push({ term, url, index, delay });

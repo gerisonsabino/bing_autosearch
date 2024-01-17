@@ -50,10 +50,6 @@ body {
     color: #000;
 }
 
-#modal-help img[src='img/edge.png'] {
-    width: 15px;
-}
-
 #modal-help ol li {
     padding: 0.3em 0;
 }
