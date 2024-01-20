@@ -16,7 +16,7 @@ body {
 
 #wrapper {
     max-width: 650px;
-    padding: 15px;
+    padding: .5em 1.5em;
 }  
 
 #wrapper p {
@@ -42,7 +42,7 @@ body {
 }
 
 #div-settings,
-#div-running {
+#div-timer {
     font-size: 0.7em;
 }
 

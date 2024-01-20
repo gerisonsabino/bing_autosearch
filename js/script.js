@@ -14,7 +14,7 @@
         },
         div: {
             settings: document.getElementById("div-settings"),
-            running: document.getElementById("div-running"),
+            timer: document.getElementById("div-timer"),
             bing: document.getElementById("div-bing")
         }
     },
@@ -132,7 +132,7 @@
                         if (w) {
                             setTimeout(() => {
                                 w.close();
-                            }, BING_AUTOSEARCH.search.interval);
+                            }, (BING_AUTOSEARCH.search.interval <= 15000 ? BING_AUTOSEARCH.search.interval : 15000) - 500);
                         }
                     }
                     catch (e) { }
@@ -152,12 +152,60 @@
                     BING_AUTOSEARCH.elements.div.bing.appendChild(iframe);
                 }
             },
-            getSettingsString: () => {
-                try {
-                    return `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} Interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}`;
+            settings: {
+                toString: () => {
+                    try {
+                        return `${BING_AUTOSEARCH.elements.select.limit.options[BING_AUTOSEARCH.elements.select.limit.selectedIndex].text}, ${BING_AUTOSEARCH.elements.select.interval.options[BING_AUTOSEARCH.elements.select.interval.selectedIndex].text} interval and Multi-tab Mode ${BING_AUTOSEARCH.elements.select.multitab.options[BING_AUTOSEARCH.elements.select.multitab.selectedIndex].text}`;
+                    }
+                    catch (e) {
+                        return `Oops! There was an error loading the settings, please clear your browser cookies and reload the page to continue`;
+                    }
                 }
-                catch (e) {
-                    return `Oops! There was an error loading the settings, please clear your browser cookies and reload the page to continue`; 
+            },
+            progress: {
+                update: (search) => {
+                    let progress = `(${search.index < 10 ? "0" + search.index : search.index}/${BING_AUTOSEARCH.search.limit < 10 ? "0" + BING_AUTOSEARCH.search.limit : BING_AUTOSEARCH.search.limit})`;
+
+                    document.title = `${progress} - Bing Auto Search Running`;
+                    BING_AUTOSEARCH.elements.span.progress.innerText = progress;
+                }
+            },
+            timer: {
+                next: null,
+                complete: null,
+                toClockFormat: (milliseconds, showHours = false) => {
+                    let hrs = Math.floor((milliseconds / (1000 * 60 * 60)) % 24);
+                    let min = Math.floor((milliseconds / 1000 / 60) % 60);
+                    let sec = Math.floor((milliseconds / 1000) % 60);
+
+                    return `${showHours ? String(hrs).padStart(2, '0') + ":" : ""}${String(min).padStart(2, '0')}:${String(sec).padStart(2, '0')}`;
+                },
+                updateEstimatedTime: (search) => {
+                    let now = new Date();
+                    let next = new Date(now.getTime() + BING_AUTOSEARCH.search.interval);
+                    let complete = new Date(now.getTime() + (BING_AUTOSEARCH.search.interval * (BING_AUTOSEARCH.search.limit - search.index)));
+
+                    if (search.index === BING_AUTOSEARCH.search.limit)
+                        next = now;
+
+                    BING_AUTOSEARCH.search.engine.timer.next = next;
+                    BING_AUTOSEARCH.search.engine.timer.complete = complete;
+                },
+                run: () => {
+                    let now = new Date();
+                    let next = (BING_AUTOSEARCH.search.engine.timer.next - now);
+                    let complete = (BING_AUTOSEARCH.search.engine.timer.complete - now);
+
+                    if (complete >= 0) {
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> ${next >= 0 ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(next)}` : "Finishing last auto search"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(complete, true)}.`;
+
+                        setTimeout(() => {
+                            BING_AUTOSEARCH.search.engine.timer.run();
+                        }, 1000);
+                    }
+                    else {
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> Stopping auto search process...`;
+                    }
                 }
             }
         },
@@ -180,16 +228,17 @@
 
             searches.forEach((search) => {
                 setTimeout(() => {
-                    let progress = `(${search.index < 10 ? "0" + search.index : search.index}/${BING_AUTOSEARCH.search.limit < 10 ? "0" + BING_AUTOSEARCH.search.limit : BING_AUTOSEARCH.search.limit})`;
-
-                    document.title = `${progress} - Bing Auto Search Running`;
-                    BING_AUTOSEARCH.elements.span.progress.innerText = progress;
+                    BING_AUTOSEARCH.search.engine.progress.update(search);
+                    BING_AUTOSEARCH.search.engine.timer.updateEstimatedTime(search);
 
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
                             BING_AUTOSEARCH.search.stop();
-                        }, BING_AUTOSEARCH.search.interval);
+                        }, (BING_AUTOSEARCH.search.interval <= 15000 ? BING_AUTOSEARCH.search.interval : 15000));
                     }
+
+                    if (search.delay === 0)
+                        BING_AUTOSEARCH.search.engine.timer.run();
 
                     if (!BING_AUTOSEARCH.search.multitab)
                         BING_AUTOSEARCH.search.engine.iframe.add(search);
@@ -197,8 +246,6 @@
                         BING_AUTOSEARCH.search.engine.window.open(search);
                 }, search.delay);
             });
-
-            BING_AUTOSEARCH.elements.div.running.innerHTML = `<strong>Auto Search Running:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
         },
         stop: () => {
             window.open("https://rewards.bing.com/pointsbreakdown");
@@ -235,7 +282,7 @@
             location.reload();
         });
 
-        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Auto Search Settings:</strong> ${BING_AUTOSEARCH.search.engine.getSettingsString()}.`;
+        BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Auto Search Settings:</strong> ${BING_AUTOSEARCH.search.engine.settings.toString()}.`;
     }
 };
 
