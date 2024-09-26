@@ -114,12 +114,7 @@
             },
             form: {
                 params: [
-                    "QBLH", //Main page textbox suggestion click
-                    "QBRE", //Search page textbox suggestion click
-                    "HDRSC1", //Search tabmenu click 
-                    "LGWQS1", "LGWQS2", "LGWQS3", //Left sidebar suggestion click
-                    "R5FD", "R5FD1", "R5FD2", "R5FD3", "R5FD4", "R5FD5", "R5FD6", "R5FD7", //Right sidebar suggestion click
-                    "QSRE1", "QSRE2", "QSRE3", "QSRE4", "QSRE5", "QSRE6", "QSRE7", "QSRE8", //Footer suggestion click
+                    "QBLH", "QBRE", "HDRSC1", "LGWQS1", "LGWQS2", "LGWQS3", "R5FD", "R5FD1", "R5FD2", "R5FD3", "R5FD4", "R5FD5", "R5FD6", "R5FD7", "QSRE1", "QSRE2", "QSRE3", "QSRE4", "QSRE5", "QSRE6", "QSRE7", "QSRE8"
                 ],
                 random: () => {
                     return BING_AUTOSEARCH.search.engine.form.params[Math.floor(Math.random() * BING_AUTOSEARCH.search.engine.form.params.length)]
@@ -133,7 +128,7 @@
                         if (w) {
                             setTimeout(() => {
                                 w.close();
-                            }, (BING_AUTOSEARCH.search.interval <= 15000 ? BING_AUTOSEARCH.search.interval : 15000) - 500);
+                            }, (search.interval <= 10000 && BING_AUTOSEARCH.search.interval !== 9999 ? search.interval : 10000) - 500);
                         }
                     }
                     catch (e) { }
@@ -197,7 +192,10 @@
                     let next = (BING_AUTOSEARCH.search.engine.timer.next - now);
                     let complete = (BING_AUTOSEARCH.search.engine.timer.complete - now);
 
-                    if (complete >= 0) {
+                    if (BING_AUTOSEARCH.search.interval === 9999) {
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> 10~60 seconds (random) auto search interval active.`;
+                    }
+                    else if (complete >= 0) {
                         BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> ${next >= 0 ? `New auto search in ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(next)}` : "Finishing last auto search"}, estimated time to complete ${BING_AUTOSEARCH.search.engine.timer.toClockFormat(complete, true)}.`;
 
                         setTimeout(() => {
@@ -205,13 +203,14 @@
                         }, 1000);
                     }
                     else {
-                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> Stopping auto search process...`;
+                        BING_AUTOSEARCH.elements.div.timer.innerHTML = `<strong>Auto Search Running:</strong> Stopping the auto search process...`;
                     }
                 }
             }
         },
         generate: () => {
             let searches = new Array();
+            let randomDelay = 0;
 
             do
             {
@@ -219,8 +218,11 @@
 
                 if (!searches.includes(term)) {
                     let index = searches.length + 1;
-                    let url = `https://www.bing.com/search?q=${encodeURIComponent(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;
+                    let url = `https://www.bing.com/search?q=${encodeURIComponent(term.toLowerCase())}&FORM=${BING_AUTOSEARCH.search.engine.form.random()}`;                
                     let delay = BING_AUTOSEARCH.search.interval * searches.length;
+
+                    if (BING_AUTOSEARCH.search.interval === 9999 && searches.length > 0)
+                        delay = randomDelay = ((Math.floor(Math.random() * 51) + 10) * 1000) + randomDelay;
 
                     searches.push({ term, url, index, delay });
                 }
@@ -240,7 +242,7 @@
                     if (search.index === BING_AUTOSEARCH.search.limit) {
                         setTimeout(() => {
                             BING_AUTOSEARCH.search.stop();
-                        }, (BING_AUTOSEARCH.search.interval <= 15000 ? BING_AUTOSEARCH.search.interval : 15000));
+                        }, (search.interval <= 10000 && BING_AUTOSEARCH.search.interval !== 9999 ? search.interval : 10000));
                     }
 
                     if (search.delay === 0)
