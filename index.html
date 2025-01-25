@@ -24,9 +24,6 @@
 </head>
 <body>
     <section id="wrapper" class="m-auto text-center">
-        <div class="alert alert-danger small">
-            <strong class="text-danger">"Points need a break":</strong> Under the new Microsoft Rewards rules, for some restricted accounts, points will only be awarded for 3 searches every 15 minutes.
-        </div>
         <header>
             <img src="img/rewards.png" alt="Microsoft Rewards" />
             <h2>Bing Auto Search for Microsoft Rewards</h2>
@@ -66,68 +63,71 @@
                     <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div class="modal-body">
-                    <div class="alert alert-warning p-2" role="alert">
-                        <small>Warning! Using automation tools is against the <a href="https://www.microsoft.com/en-US/servicesagreement/#14l_MicrosoftRewards" target="_blank" class="alert-link">Microsoft Rewards terms of use</a>. Your account may be suspended and/or banned, use this tool at your own risk.</small>
-                    </div>
-                    <div>
-                        <h6>
-                            <strong>Tutorial</strong>
-                        </h6>
-                        <ol class="px-3 small">
-                            <!--<li>Use <a href="https://www.microsoft.com/edge/download" target="_blank">Microsoft Edge (<img src="img/edge.png" alt="Microsoft Edge" />)</a> browser to earn extra points.</li>-->
-                            <li><a href="https://www.bing.com/" target="_blank">Sign in to Bing</a> with your Microsoft Rewards account and return to this page.</li>
-                            <li>Start a new auto search by clicking the "Start Auto Search" button, the progress counter will be showned.</li>
-                            <li>To perform mobile searches, use your smartphone or emulate a mobile browser through the developer tools (F12) on the PC.</li>
-                        </ol>
-                    </div>
-                    <div>
-                        <h6>
-                            <strong>Limit</strong>
-                        </h6>
-                        <div class="form-group">
-                            <select class="form-select" id="slc-limit">
-                                <option value="5">05 searches</option>
-                                <option value="10">10 searches</option>
-                                <option value="20">20 searches</option>
-                                <option value="25">25 searches</option>
-                                <option value="30">30 searches</option>
-                                <option value="35" selected="selected">35 searches (default)</option>
-                                <option value="40">40 searches</option>
-                                <option value="45">45 searches</option>
-                                <option value="50">50 searches</option>
-                            </select>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="alert alert-danger small">
+                                <p>
+                                    <strong class="text-danger">"Points need a break:"</strong> Under the new Microsoft Rewards rules, for some restricted accounts, points will only be awarded for 3 searches every 15 minutes (If this is your case, use the 5 minute interval.).
+                                </p>
+                                <p class="mb-0">
+                                    Using automation tools is against the <a href="https://www.microsoft.com/en-US/servicesagreement/#14l_MicrosoftRewards" target="_blank" class="alert-link">Microsoft Rewards terms of use</a>. <strong class="text-danger">Your account may be restricted, suspended and/or banned, use this tool at your own risk.</strong>
+                                </p>
+                            </div>
                         </div>
-                    </div>
-                    <div class="mt-2">
-                        <h6>
-                            <strong>Interval</strong>
-                        </h6>
-                        <div class="form-group">
-                            <select class="form-select" id="slc-interval">
-                                <option value="5000">05 seconds</option>
-                                <option value="10000" selected="selected">10 seconds (default)</option>
-                                <option value="15000">15 seconds</option>
-                                <option value="30000">30 seconds</option>
-                                <option value="60000">60 seconds</option>
-                                <option value="9999">10~60 seconds (random)</option>
-                                <option value="120000">02 minutes</option>
-                                <option value="180000">03 minutes</option>
-                                <option value="240000">04 minutes</option>
-                                <option value="300000">05 minutes (recomended for restricted accounts)</option>
-                            </select>
+                        <div class="col-lg-12">
+                            <h6>
+                                <strong class="text-muted">Tutorial</strong>
+                            </h6>
+                            <ol class="px-3 small">
+                                <li><a href="https://www.bing.com/" target="_blank"><strong>Sign in to Bing</strong></a> with your Microsoft Rewards account and return to this page.</li>
+                                <li>Start a new auto search by clicking the "Start Auto Search" button, the progress counter will be showned.</li>
+                                <li>To perform mobile searches, use your smartphone or emulate a mobile browser through the developer tools (F12) on the PC.</li>
+                            </ol>
                         </div>
-                    </div>
-                    <div class="mt-2">
-                        <h6>
-                            <strong>Multi-tab Mode</strong>
-                        </h6>
-                        <div class="form-group">
-                            <select class="form-select" id="slc-multitab">
-                                <option value="true">Enabled</option>
-                                <option value="false" selected="selected">Disabled (default)</option>
-                            </select>
+                        <div class="col-lg-12">
+                            <h6>
+                                <strong class="text-muted">Settings</strong>
+                            </h6>
+                            <div class="form-group pb-3">
+                                <strong>Limit</strong>
+                                <select class="form-select" id="slc-limit">
+                                    <option value="5">05 searches</option>
+                                    <option value="10">10 searches</option>
+                                    <option value="20">20 searches</option>
+                                    <option value="25">25 searches</option>
+                                    <option value="30">30 searches</option>
+                                    <option value="35" selected="selected">35 searches (default)</option>
+                                    <option value="40">40 searches</option>
+                                    <option value="45">45 searches</option>
+                                    <option value="50">50 searches</option>
+                                </select>
+                            </div>
+                            <div class="form-group pb-3">
+                                <strong>Interval</strong>
+                                <select class="form-select" id="slc-interval">
+                                    <option value="5000">05 seconds</option>
+                                    <option value="10000" selected="selected">10 seconds (default)</option>
+                                    <option value="15000">15 seconds</option>
+                                    <option value="30000">30 seconds</option>
+                                    <option value="60000">60 seconds</option>
+                                    <option value="9999">10~60 seconds (random)</option>
+                                    <option value="120000">02 minutes</option>
+                                    <option value="180000">03 minutes</option>
+                                    <option value="240000">04 minutes</option>
+                                    <option value="300000">05 minutes (recomended for restricted accounts)</option>
+                                </select>
+                            </div>
+                            <div class="form-group">
+                                <strong>Multi-tab Mode</strong>
+                                <p class="small mb-0">
+                                    <small>When enabled, it's necessary to allow opening of multiple tabs/pop-ups in your browser.</small>
+                                </p>
+                                <select class="form-select" id="slc-multitab">
+                                    <option value="true">Enabled</option>
+                                    <option value="false" selected="selected">Disabled (default)</option>
+                                </select>
+                            </div>
                         </div>
-                        <p class="small text-danger mt-2 mb-0">Be aware! To use the multi-tab mode, it's necessary to allow the opening of multiple tabs/pop-ups in your browser.</p>
                     </div>
                 </div>
             </div>
