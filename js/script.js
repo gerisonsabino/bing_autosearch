@@ -95,6 +95,21 @@
         limit: 35,
         interval: 10000,
         multitab: false,
+        wakeLock: {
+            sentinel: null,
+            active: false,
+            activate: () => {
+                navigator.wakeLock.request("screen").then(sentinel => {
+                    BING_AUTOSEARCH.search.wakeLock.sentinel = sentinel;
+                    BING_AUTOSEARCH.search.wakeLock.active = true;
+
+                    BING_AUTOSEARCH.search.wakeLock.sentinel.addEventListener("release", () => {
+                        BING_AUTOSEARCH.search.wakeLock.sentinel = null;
+                        BING_AUTOSEARCH.search.wakeLock.active = false;
+                    });
+                }).catch(() => { });
+            }
+        },
         engine: {
             terms: {
                 lists: [
@@ -291,6 +306,16 @@
         });
 
         BING_AUTOSEARCH.elements.div.settings.innerHTML = `<strong>Auto Search Settings:</strong> ${BING_AUTOSEARCH.search.engine.settings.toString()}.`;
+
+        if ("wakeLock" in navigator) {
+            BING_AUTOSEARCH.search.wakeLock.activate();
+
+            document.addEventListener("visibilitychange", () => {
+                if (document.visibilityState === "visible")
+                    if (!BING_AUTOSEARCH.search.wakeLock.active)
+                        BING_AUTOSEARCH.search.wakeLock.activate();
+            });
+        }
     }
 };
 
